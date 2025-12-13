@@ -23,6 +23,8 @@ const createMasterAdmin = async () => {
     role: "admin"
   });
 
+
+
   console.log("🎉 Master Admin Created Automatically!");
   console.log("   Email:", adminEmail);
   console.log("   Password: Admin@12345");
