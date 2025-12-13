@@ -5,11 +5,13 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
 
-// connect to db and then initialize admin
-connectDB().then(() => {
-  createMasterAdmin(); // <-- run admin seeder once DB is ready
-});
+// connect to DB only if not testing
+if (process.env.NODE_ENV !== "test") {
+  connectDB().then(() => createMasterAdmin());
 
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
+  app.listen(PORT, () => {
+    console.log("Server running on port", PORT);
+  });
+}
+
+module.exports = app; // export for tests
