@@ -1,0 +1,10 @@
+const roles = require("../config/roles");
+
+const isAdmin = (req, res, next) => {
+  if (req.user.role !== roles.ADMIN) {
+    return res.status(403).json({ error: "Admin access required" });
+  }
+  next();
+};
+
+module.exports = isAdmin;
