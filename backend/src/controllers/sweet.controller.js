@@ -19,7 +19,7 @@ const getAllSweets = async (req, res) => {
     const sweets = await sweetService.getAllSweets();
     return res.status(200).json({ sweets });
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    return res.status(500).json({ error: "Failed to fetch sweets" });
   }
 };
 
@@ -42,6 +42,9 @@ const updateSweet = async (req, res) => {
       sweet,
     });
   } catch (err) {
+    if (err.message === "Sweet not found") {
+      return res.status(404).json({ error: err.message });
+    }
     return res.status(400).json({ error: err.message });
   }
 };
@@ -52,15 +55,21 @@ const deleteSweet = async (req, res) => {
     await sweetService.deleteSweet(req.params.id);
     return res.status(200).json({ message: "Sweet deleted" });
   } catch (err) {
+    if (err.message === "Sweet not found") {
+      return res.status(404).json({ error: err.message });
+    }
     return res.status(400).json({ error: err.message });
   }
 };
 
 // purchase sweet (user/admin)
-// default purchase = 1 item
 const purchaseSweet = async (req, res) => {
   try {
-    const amount = Number(req.body?.amount) || 1; // 👈 safe access
+    const amount = Number(req.body?.amount) || 1;
+
+    if (amount <= 0) {
+      return res.status(400).json({ error: "Invalid purchase amount" });
+    }
 
     const sweet = await sweetService.purchaseSweet(
       req.params.id,
@@ -72,17 +81,30 @@ const purchaseSweet = async (req, res) => {
       sweet,
     });
   } catch (err) {
-    console.error("PURCHASE ERROR:", err.message);
-    return res.status(400).json({ error: err.message });
+    if (err.message === "Sweet not found") {
+      return res.status(404).json({ error: err.message });
+    }
+
+    if (err.message === "Not enough stock") {
+      return res.status(400).json({ error: err.message });
+    }
+
+    if (process.env.NODE_ENV !== "test") {
+      console.error("PURCHASE ERROR:", err.message);
+    }
+
+    return res.status(500).json({ error: "Purchase failed" });
   }
 };
 
-
 // restock sweet (admin)
-// default restock = 1 item
 const restockSweet = async (req, res) => {
   try {
     const amount = Number(req.body.amount) || 1;
+
+    if (amount <= 0) {
+      return res.status(400).json({ error: "Invalid restock amount" });
+    }
 
     const sweet = await sweetService.restockSweet(
       req.params.id,
@@ -94,6 +116,9 @@ const restockSweet = async (req, res) => {
       sweet,
     });
   } catch (err) {
+    if (err.message === "Sweet not found") {
+      return res.status(404).json({ error: err.message });
+    }
     return res.status(400).json({ error: err.message });
   }
 };
