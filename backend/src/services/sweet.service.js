@@ -2,54 +2,59 @@ const Sweet = require("../models/Sweet");
 
 // create sweet
 const createSweet = async (data) => {
-  const sweet = await Sweet.create(data);
-  return sweet;
+  return await Sweet.create(data);
 };
 
 // get all sweets
 const getAllSweets = async () => {
-  return Sweet.find();
+  return await Sweet.find();
 };
 
 // search sweets
 const searchSweets = async (query) => {
-  const searchQuery = {};
+  const filter = {};
 
   if (query.name) {
-    searchQuery.name = { $regex: query.name, $options: "i" };
-  }
-  if (query.category) {
-    searchQuery.category = query.category;
-  }
-  if (query.minPrice || query.maxPrice) {
-    searchQuery.price = {};
-    if (query.minPrice) searchQuery.price.$gte = query.minPrice;
-    if (query.maxPrice) searchQuery.price.$lte = query.maxPrice;
+    filter.name = { $regex: query.name, $options: "i" };
   }
 
-  return Sweet.find(searchQuery);
+  if (query.category) {
+    filter.category = query.category;
+  }
+
+  if (query.minPrice && query.maxPrice) {
+    filter.price = {
+      $gte: Number(query.minPrice),
+      $lte: Number(query.maxPrice),
+    };
+  }
+
+  return await Sweet.find(filter);
 };
 
 // update sweet
 const updateSweet = async (id, data) => {
   const sweet = await Sweet.findByIdAndUpdate(id, data, { new: true });
+  if (!sweet) throw new Error("Sweet not found");
   return sweet;
 };
 
 // delete sweet
 const deleteSweet = async (id) => {
-  return Sweet.findByIdAndDelete(id);
+  const sweet = await Sweet.findByIdAndDelete(id);
+  if (!sweet) throw new Error("Sweet not found");
 };
 
-
 // purchase sweet
-const purchaseSweet = async (id, amount) => {
-  const sweet = await Sweet.findById(id);
-  if (!sweet) throw new Error("Sweet not found");
+const purchaseSweet = async (id, amount = 1) => {
+  // console.log("Purchase request:", id, amount);
+   // 👈 TEMP LOG
 
-  if (sweet.quantity < amount) {
-    throw new Error("Not enough stock");
-  }
+  const sweet = await Sweet.findById(id);
+
+  if (!sweet) throw new Error("Sweet not found");
+  if (amount <= 0) throw new Error("Invalid purchase amount");
+  if (sweet.quantity < amount) throw new Error("Not enough stock");
 
   sweet.quantity -= amount;
   await sweet.save();
@@ -57,10 +62,13 @@ const purchaseSweet = async (id, amount) => {
   return sweet;
 };
 
-// restock sweet (admin)
-const restockSweet = async (id, amount) => {
+
+// restock sweet
+const restockSweet = async (id, amount = 1) => {
   const sweet = await Sweet.findById(id);
+
   if (!sweet) throw new Error("Sweet not found");
+  if (amount <= 0) throw new Error("Invalid restock amount");
 
   sweet.quantity += amount;
   await sweet.save();
@@ -68,13 +76,12 @@ const restockSweet = async (id, amount) => {
   return sweet;
 };
 
-
 module.exports = {
   createSweet,
   getAllSweets,
   searchSweets,
   updateSweet,
-  deleteSweet, 
+  deleteSweet,
   purchaseSweet,
-  restockSweet
+  restockSweet,
 };

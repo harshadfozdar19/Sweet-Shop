@@ -8,11 +8,11 @@ const register = async (req, res) => {
     return res.status(201).json({
       message: "User registered successfully",
       user: {
-        id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     });
   } catch (err) {
     return res.status(400).json({ error: err.message });
@@ -28,18 +28,34 @@ const login = async (req, res) => {
       message: "Login successful",
       token,
       user: {
-        id: user._id,
+        _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
 };
 
+// get current logged-in user
+const getMe = async (req, res) => {
+  try {
+    // req.user is set by auth middleware
+    return res.json({
+      _id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to fetch user" });
+  }
+};
+
 module.exports = {
   register,
-  login
+  login,
+  getMe,
 };

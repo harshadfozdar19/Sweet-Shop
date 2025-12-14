@@ -12,7 +12,7 @@ const {
 
 // protected routes
 router.post("/", auth, isAdmin, createSweetValidation, validate, sweetController.createSweet);
-router.get("/", auth, sweetController.getAllSweets);
+router.get("/", sweetController.getAllSweets);
 router.get("/search", auth, sweetController.searchSweets);
 
 // admin only updates
