@@ -207,6 +207,7 @@ export default function Home() {
         />
       )}
 
+
       {/* Cart Drawer */}
       {showCart && (
         <CartDrawer
@@ -214,6 +215,7 @@ export default function Home() {
           onCheckout={handleCheckout}
         />
       )}
+
 
       <Footer />
     </div>
