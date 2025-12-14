@@ -1,4 +1,6 @@
+
 const request = require("supertest");
+const mongoose = require("mongoose");
 const app = require("../app");
 const User = require("../models/User");
 const Sweet = require("../models/Sweet");
@@ -48,10 +50,11 @@ beforeAll(async () => {
   userToken = userRes.body.token;
 });
 
-afterAll(async () => {
-  await Sweet.deleteMany();
-  await User.deleteMany();
-});
+// afterAll(async () => {
+//   await Sweet.deleteMany({});
+//   await User.deleteMany({});
+//   await mongoose.connection.close(); // ✅ VERY IMPORTANT
+// });
 
 
 // 1️⃣ Admin can create a sweet
@@ -67,9 +70,8 @@ test("Admin can create a sweet", async () => {
       image: "https://example.com/sweet.jpg",
     });
 
-  sweetId = res.body.sweet._id;
-
   expect(res.statusCode).toBe(201);
+  sweetId = res.body.sweet._id;
 });
 
 
@@ -93,6 +95,7 @@ test("User cannot create a sweet", async () => {
 // 3️⃣ Get all sweets
 test("Anyone can fetch sweets", async () => {
   const res = await request(app).get("/api/sweets");
+
   expect(res.statusCode).toBe(200);
   expect(Array.isArray(res.body.sweets)).toBe(true);
 });
@@ -133,7 +136,7 @@ test("User can purchase sweet", async () => {
 });
 
 
-// 7️⃣ Purchase fails when stock is insufficient
+// 7️⃣ Purchase fails when stock insufficient
 test("Purchase fails if stock insufficient", async () => {
   const res = await request(app)
     .post(`/api/sweets/${sweetId}/purchase`)
