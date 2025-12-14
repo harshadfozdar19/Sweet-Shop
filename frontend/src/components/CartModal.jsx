@@ -63,6 +63,7 @@ export default function CartModal({ onClose, onSuccess }) {
           onClick={onClose}
           className="mt-4 w-full bg-gray-200 py-2 rounded"
         >
+            
           Close
         </button>
       </div>
