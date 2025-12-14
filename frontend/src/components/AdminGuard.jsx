@@ -4,6 +4,7 @@ export default function AdminGuard({ children }) {
   const { user } = useAuth();
 
   if (!user || user.role !== "admin") {
+    
     return null; // hide admin UI
   }
 
