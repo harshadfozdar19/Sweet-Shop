@@ -36,7 +36,7 @@ export default function CartDrawer({ onClose, onCheckout }) {
                   <div className="flex-1">
                     <h4 className="font-bold">{item.name}</h4>
                     <p className="text-pink-600 font-semibold">
-                      ₹{item.price}
+                      ₹{item.price} / kg
                     </p>
                   </div>
 

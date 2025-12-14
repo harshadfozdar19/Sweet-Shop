@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import WelcomeScreen from "../components/WelcomeScreen";
 import SweetGrid from "../components/SweetGrid";
@@ -19,6 +20,7 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const { user, login } = useAuth();
+  const { cart, clearCart } = useCart();
 
   // fetch sweets
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function Home() {
       try {
         const res = await api.get("/sweets");
         setSweets(Array.isArray(res.data.sweets) ? res.data.sweets : []);
-      } catch (err) {
+      } catch {
         setError("Failed to load sweets");
       } finally {
         setLoading(false);
@@ -35,6 +37,41 @@ export default function Home() {
 
     fetchSweets();
   }, []);
+
+  // checkout handler
+  const handleCheckout = async () => {
+    // require login
+    if (!user) {
+      setShowCart(false);
+      setShowAuth(true);
+      return;
+    }
+
+    try {
+      // purchase each cart item
+      for (const item of cart) {
+        const res = await api.post(
+          `/sweets/${item._id}/purchase`,
+          { amount: item.quantityInCart }
+        );
+
+        const updatedSweet = res.data.sweet;
+
+        // update stock locally
+        setSweets((prev) =>
+          prev.map((s) =>
+            s._id === updatedSweet._id ? updatedSweet : s
+          )
+        );
+      }
+
+      clearCart();
+      setShowCart(false);
+      alert("Purchase successful 🎉");
+    } catch (err) {
+      alert(err.response?.data?.error || "Checkout failed");
+    }
+  };
 
   // welcome screen
   if (showWelcome) {
@@ -96,7 +133,7 @@ export default function Home() {
             <img
               src="https://www.sweedesi.com/cdn/shop/collections/one-stop-sweet-shop-for-famous-indian-sweets-309001_b9c5b281-fff8-4fa9-aa2d-eb4efc4e2c79.jpg?v=1740033502"
               alt="Sweet shop legacy"
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
@@ -174,10 +211,7 @@ export default function Home() {
       {showCart && (
         <CartDrawer
           onClose={() => setShowCart(false)}
-          onCheckout={() => {
-            setShowCart(false);
-            alert("Checkout integration coming next");
-          }}
+          onCheckout={handleCheckout}
         />
       )}
 
@@ -185,5 +219,3 @@ export default function Home() {
     </div>
   );
 }
-
-

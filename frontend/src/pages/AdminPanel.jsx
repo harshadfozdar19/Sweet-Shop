@@ -216,7 +216,7 @@ export default function AdminPanel() {
             {filteredSweets.map((s) => (
               <tr key={s._id} className="border-t">
                 <td className="p-4">{s.name}</td>
-                <td className="p-4">₹{s.price}</td>
+                <td className="p-4">₹{s.price} / kg</td>
                 <td className="p-4">{s.quantity}</td>
                 <td className="p-4">
                   <div className="flex justify-center gap-2">
