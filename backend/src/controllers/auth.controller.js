@@ -1,7 +1,5 @@
 const authService = require("../services/auth.service");
 
-
-
 //register controller
 const register = async (req, res) => {
   try {
