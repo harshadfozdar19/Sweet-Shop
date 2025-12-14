@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
         isAdmin,
       }}
     >
+        
       {children}
     </AuthContext.Provider>
   );
