@@ -112,6 +112,7 @@ export default function AuthModal({ onClose, onSuccess }) {
             className="text-pink-600 font-bold hover:underline"
           >
             {isLogin ? "Register" : "Login"}
+            
           </button>
         </p>
       </div>
