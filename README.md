@@ -319,7 +319,12 @@ Production-ready codebase
 
 ✨ Thank you for reviewing Mithai Magic!
 
+---
+
 screen shots of UI:
+---
+
+
 <img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/3278826d-0b0e-4068-806c-db334d16460a" />
 
 <img width="1892" height="912" alt="image" src="https://github.com/user-attachments/assets/27e0ebc8-7507-4d8d-939a-f97ddc00e449" />
@@ -332,6 +337,14 @@ screen shots of UI:
 
 <img width="1902" height="913" alt="image" src="https://github.com/user-attachments/assets/aa2b4fa4-18d7-43b2-8fef-9835f793cb6e" />
 
+
+---
+
+
+screen shots of test cases:
+---
+
+<img width="773" height="513" alt="image" src="https://github.com/user-attachments/assets/f7426599-bfc3-4451-80fd-c55125d293a8" />
 
 
 
