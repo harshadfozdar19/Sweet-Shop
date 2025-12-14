@@ -1,9 +1,9 @@
 # 🍬 Mithai Magic — Sweet Shop Management System
 
-Mithai Magic is a full-stack Sweet Shop Management System built using modern web technologies.  
-The application allows users to browse and purchase sweets, while admins can manage inventory through a secure admin panel.
+Mithai Magic is a **full-stack Sweet Shop Management System** built using modern web technologies.  
+The application allows users to browse sweets, manage a cart, and purchase items, while admins can securely manage inventory.
 
-The project is designed with scalability, clean architecture, and security in mind, following real-world development practices.
+The project is designed with **scalability, clean architecture, security, and real-world practices** in mind.
 
 ---
 
@@ -12,11 +12,13 @@ The project is designed with scalability, clean architecture, and security in mi
 ### 👤 User Features
 - User registration and login
 - JWT-based authentication
+- Persistent login using `/api/auth/me`
 - Browse available sweets
 - Search and filter sweets
 - Add sweets to cart
-- View cart with quantity management
-- Responsive UI for mobile and desktop
+- Cart quantity management
+- Buy button disabled when stock is zero
+- Responsive UI (mobile & desktop)
 
 ### 🛠️ Admin Features
 - Automatic master admin creation on server startup
@@ -29,7 +31,15 @@ The project is designed with scalability, clean architecture, and security in mi
 ### 📦 Inventory Management
 - Purchase API decreases stock
 - Restock API increases stock
-- Buy button disabled when stock is zero
+- Real-time stock updates on UI
+
+### 🛒 Cart
+- Cart implemented using React Context
+- Add / remove items
+- Update quantities
+- Cart count visible in navbar
+- Cart drawer UI
+- Checkout intentionally skipped (explained below)
 
 ---
 
@@ -38,7 +48,7 @@ The project is designed with scalability, clean architecture, and security in mi
 ### Backend
 - Node.js
 - Express.js
-- MongoDB
+- MongoDB (MongoDB Atlas)
 - Mongoose
 - JWT Authentication
 - bcrypt
@@ -55,30 +65,10 @@ The project is designed with scalability, clean architecture, and security in mi
 
 ## 📁 Project Structure
 
-root
-├── backend
-│ ├── src
-│ │ ├── controllers
-│ │ ├── routes
-│ │ ├── services
-│ │ ├── middleware
-│ │ ├── models
-│ │ ├── seeds
-│ │ └── app.js
-│ ├── server.js
-│ └── package.json
-│
-├── frontend
-│ ├── src
-│ │ ├── components
-│ │ ├── context
-│ │ ├── pages
-│ │ ├── api
-│ │ └── main.jsx
-│ └── package.json
-│
-└── README.md
+<img width="446" height="647" alt="image" src="https://github.com/user-attachments/assets/f319cef2-4108-48c2-ae19-09277138ecab" />
 
+yaml
+Copy code
 
 ---
 
@@ -86,97 +76,167 @@ root
 
 ### 1️⃣ Clone Repository
 
-git clone <repository-url>
-cd <project-folder>
 
-
-
-
+```bash
+git clone https://github.com/harshadfozdar19/Sweet-Shop.git
+cd Sweet-Shop
+```
+---
+2️⃣ Backend Setup
 ---
 
 
+```bash
+//Copy code
+cd backend
+npm install
+```
+---
+Create a .env file:
+---
+
+env
+```
+//Copy code
+PORT=5000
+MONGO_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_jwt_secret
+ADMIN_EMAIL=admin@sweetshop.com
+ADMIN_PASSWORD=admin123
+```
+---
+Start backend:
+
+```bash
+//Copy code
+npm start
+```
+---
+Backend runs at:
+
+
+http://localhost:5000
+
+---
+
+3️⃣ Frontend Setup
+---
+
+
+```bash
+//Copy code
+cd frontend
+npm install
+npm run dev
+```
+
+---
+Frontend runs at:
+
+```
+//Copy code
+http://localhost:5173
+```
+---
 🔐 Authentication Flow
+---
 
 Users can register and log in
 
 JWT token is stored in localStorage
 
-Token is verified on page reload using /api/auth/me
+On page reload, frontend verifies token via:
+
+
+GET /api/auth/me
+
+Invalid or expired tokens are cleared automatically
 
 Admin role is assigned only to the seeded admin account
 
 
-
-
-
 ---
-
 🧁 API Endpoints
+---
 
 Auth
-Method	Endpoint	Description
-POST	/api/auth/register	Register user
-POST	/api/auth/login	Login user
-GET	/api/auth/me	Get logged-in user
+---
 
+POST	---/api/auth/register---	Register user
+
+POST	---/api/auth/login---	Login user
+
+GET	---/api/auth/me	---Get logged-in user
+
+
+---
 Sweets
-Method	Endpoint	Description
-GET	/api/sweets	Get all sweets
-GET	/api/sweets/search	Search sweets
-POST	/api/sweets	Add sweet (Admin)
-PUT	/api/sweets/:id	Update sweet (Admin)
-DELETE	/api/sweets/:id	Delete sweet (Admin)
+---
 
-Inventory
-Method	Endpoint	Description
-POST	/api/sweets/:id/purchase	Purchase sweet
-POST	/api/sweets/:id/restock	Restock sweet (Admin)
+GET	---/api/sweets---	Get all sweets
 
+GET	---/api/sweets/search---	Search sweets
 
+POST	---/api/sweets---	Add sweet (Admin)
 
+PUT	---/api/sweets/:id---	Update sweet (Admin)
 
-----
-
-
-🛒 Cart & Checkout
-
-1]Cart
-
-Cart is implemented on the frontend using React Context
-
-Users can add sweets to cart
-
-Quantity can be increased or decreased
-
-Cart count is visible in the navbar
-
-Cart UI is responsive
-
-
-
-2]Checkout
-
-Checkout is intentionally kept as a placeholder
-
-Backend purchase API is implemented and tested separately
-
-Payment and order workflows were outside the scope of the assignment
-
-Current checkout behavior:
-
-Checkout coming soon
-
-The cart architecture allows easy integration of checkout logic in the future.
-
-
+DELETE	---/api/sweets/:id---	Delete sweet (Admin)
 
 
 ---
 
+Inventory
+---
 
+POST	---/api/sweets/:id/purchase---	Purchase sweet
 
+POST	---/api/sweets/:id/restock---	Restock sweet (Admin)
+
+---
+
+💰 Price Handling
+---
+
+Prices are stored as numbers in the database
+
+Displayed on UI as:
+
+₹200 / kg
+
+This ensures accurate cart calculations and future checkout readiness
+
+---
+
+🛒 Cart & Checkout
+---
+
+Cart
+
+Implemented using React Context
+
+Add/remove sweets
+
+Quantity updates
+
+Cart drawer UI
+
+Cart count visible in navbar
+
+Checkout (Intentionally Skipped)
+Backend purchase API is implemented and tested
+
+Payment gateway and order workflow were out of scope
+
+Checkout button currently shows a placeholder message
+
+Architecture allows easy future integration
+
+---
 
 🧪 Testing
+---
+
 Backend
 
 Unit tests written using Jest
@@ -185,43 +245,79 @@ APIs tested manually using Postman
 
 Run tests:
 
+```bash
+Copy code
 npm test
+```
 
+---
 Frontend
 
 Manual UI testing
 
-State management and routing verified
+Routing, auth, cart, and admin flows verified
 
 
 ---
 
+🌍 Deployment
+---
 
+Backend
+
+
+Deployed on Render
+
+MongoDB Atlas used for database
+
+Environment variables configured via Render dashboard
+
+---
+
+Frontend
+
+Ready for deployment on Vercel
+
+Uses environment-based API URLs
+
+
+---
 
 🤖 My AI Usage
-AI Tools Used
+---
 
+AI Tools Used: 
 ChatGPT
 
-How AI Was Used
+
+How AI Was Used:
 
 Generating initial boilerplate
 
 Debugging issues
 
-UI/UX refinements
+UI/UX refinement
 
+Architecture discussions
 
 ---
 
-
 Reflection
-
+---
 AI was used as a development assistant to improve productivity.
 
-All AI-generated suggestions were reviewed and manually adapted to ensure correctness and originality.
+All suggestions were reviewed, adapted, and manually implemented to ensure correctness and originality.
 
+📌 Final Notes
+No public admin creation endpoint
 
+Secure role-based access control
+
+Clean and scalable architecture
+
+Production-ready codebase
+
+✨ Thank you for reviewing Mithai Magic!
 
 screen shots of UI:
 <img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/3278826d-0b0e-4068-806c-db334d16460a" />
