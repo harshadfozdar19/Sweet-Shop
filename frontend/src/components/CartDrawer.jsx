@@ -15,6 +15,7 @@ export default function CartDrawer({ onClose, onCheckout }) {
           </button>
         </div>
 
+
         {cart.length === 0 ? (
           <p className="text-gray-500 text-center mt-20">
             Your cart is empty 🛒
