@@ -26,6 +26,7 @@ export default function About() {
             Our Story
           </h2>
 
+
           <p className="text-gray-700 text-lg leading-relaxed mb-5">
             Mithai Magic began as a small family-run sweet shop with one simple
             promise — to serve authentic Indian sweets made with love and honesty.
