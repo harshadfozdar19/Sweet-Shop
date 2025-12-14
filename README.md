@@ -222,3 +222,22 @@ AI was used as a development assistant to improve productivity.
 All AI-generated suggestions were reviewed and manually adapted to ensure correctness and originality.
 
 
+
+screen shots of UI:
+<img width="1918" height="912" alt="image" src="https://github.com/user-attachments/assets/3278826d-0b0e-4068-806c-db334d16460a" />
+
+<img width="1892" height="912" alt="image" src="https://github.com/user-attachments/assets/27e0ebc8-7507-4d8d-939a-f97ddc00e449" />
+
+<img width="1897" height="911" alt="image" src="https://github.com/user-attachments/assets/db3584c5-c4cb-44ec-819c-7c13c0a79e36" />
+
+<img width="1901" height="908" alt="image" src="https://github.com/user-attachments/assets/ba91852d-f560-47bd-8b8d-f61797acd40c" />
+
+<img width="1897" height="913" alt="image" src="https://github.com/user-attachments/assets/780357bf-a0c6-4a02-86a9-10b123a7bdb2" />
+
+<img width="1902" height="913" alt="image" src="https://github.com/user-attachments/assets/aa2b4fa4-18d7-43b2-8fef-9835f793cb6e" />
+
+
+
+
+
+
