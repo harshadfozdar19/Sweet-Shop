@@ -26,6 +26,8 @@ beforeAll(async () => {
   adminToken = res.body.token;
 });
 
+
+
 test("Admin can create a sweet", async () => {
   const res = await request(app)
     .post("/api/sweets")
