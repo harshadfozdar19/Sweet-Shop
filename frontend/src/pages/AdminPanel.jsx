@@ -213,6 +213,7 @@ export default function AdminPanel() {
             </tr>
           </thead>
           <tbody>
+            
             {filteredSweets.map((s) => (
               <tr key={s._id} className="border-t">
                 <td className="p-4">{s.name}</td>
