@@ -65,7 +65,104 @@ The project is designed with **scalability, clean architecture, security, and re
 
 ## 📁 Project Structure
 
-<img width="446" height="647" alt="image" src="https://github.com/user-attachments/assets/f319cef2-4108-48c2-ae19-09277138ecab" />
+```
+Sweet-Shop/
+│
+├── backend/
+│   ├── src/
+│   │   ├── app.js
+│   │   ├── server.js
+│   │   │
+│   │   ├── controllers/
+│   │   │   ├── auth.controller.js
+│   │   │   └── sweet.controller.js
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── auth.routes.js
+│   │   │   └── sweet.routes.js
+│   │   │
+│   │   ├── services/
+│   │   │   ├── auth.service.js
+│   │   │   └── sweet.service.js
+│   │   │
+│   │   ├── models/
+│   │   │   ├── User.js
+│   │   │   └── Sweet.js
+│   │   │
+│   │   ├── middleware/
+│   │   │   ├── auth.middleware.js
+│   │   │   ├── admin.middleware.js
+│   │   │   └── validate.middleware.js
+│   │   │
+│   │   ├── validators/
+│   │   │   └── auth.validator.js
+│   │   │
+│   │   ├── seed/
+│   │   │   └── createAdmin.js
+│   │   │
+│   │   └── tests/
+│   │       ├── auth.test.js
+│   │       ├── sweets.test.js
+│   │       └── inventory.test.js
+│   │
+│   ├── .env.example
+│   ├── jest.config.js
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+│
+├── frontend/
+│   ├── public/
+│   │   └── favicon.ico
+│   │
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── api.js
+│   │   │
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── CartContext.jsx
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── SweetCard.jsx
+│   │   │   ├── SweetGrid.jsx
+│   │   │   ├── CartDrawer.jsx
+│   │   │   ├── AuthModal.jsx
+│   │   │   ├── WelcomeScreen.jsx
+│   │   │   └── AdminGuard.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── About.jsx
+│   │   │   └── AdminPanel.jsx
+│   │   │
+│   │   ├── __tests__/
+│   │   │   ├── AuthContext.test.jsx
+│   │   │   ├── SweetCard.test.jsx
+│   │   │   ├── Navbar.test.jsx
+│   │   │   ├── Cart.test.jsx
+│   │   │   └── CartDrawer.test.jsx
+│   │   │
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── setupTests.js
+│   ├── vite.config.js
+│   ├── package.json
+│   ├── package-lock.json
+│   └── README.md
+│
+├── .gitignore
+├── README.md
+└── LICENSE (optional)
+
+```
+
+
+<!-- <img width="446" height="647" alt="image" src="https://github.com/user-attachments/assets/f319cef2-4108-48c2-ae19-09277138ecab" /> -->
 
 yaml
 Copy code
