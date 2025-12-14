@@ -6,5 +6,6 @@ test("Purchase fails if quantity insufficient", async () => {
     .post("/api/sweets/invalid-id/purchase")
     .set("Authorization", "Bearer invalid");
 
+    
   expect(res.statusCode).toBe(401);
 });
