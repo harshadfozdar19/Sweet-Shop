@@ -1,33 +1,33 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-// this will run only once when the server starts
+// runs once on server start
 const createMasterAdmin = async () => {
-  const adminEmail = "admin@sweetshop.com";
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  // check if admin already exists
+  // safety check
+  if (!adminEmail || !adminPassword) {
+    console.warn("⚠️ Admin credentials not set in environment variables");
+    return;
+  }
+
   const existingAdmin = await User.findOne({ email: adminEmail });
-
   if (existingAdmin) {
     console.log("✔ Admin already exists:", adminEmail);
     return;
   }
 
-  // create admin with default secure password
-  const hashedPassword = await bcrypt.hash("Admin@12345", 10);
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
   await User.create({
     name: "Super Admin",
     email: adminEmail,
     password: hashedPassword,
-    role: "admin"
+    role: "admin",
   });
 
-
-
   console.log("🎉 Master Admin Created Automatically!");
-  console.log("   Email:", adminEmail);
-  console.log("   Password: Admin@12345");
 };
 
 module.exports = createMasterAdmin;
