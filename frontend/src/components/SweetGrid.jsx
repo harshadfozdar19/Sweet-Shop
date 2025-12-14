@@ -76,6 +76,7 @@ export default function SweetGrid({ sweets }) {
               <SweetCard
                 key={sweet._id}
                 sweet={sweet}
+                
               />
             ))}
           </div>
