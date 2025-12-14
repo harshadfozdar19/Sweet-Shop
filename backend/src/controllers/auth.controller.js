@@ -1,6 +1,8 @@
 const authService = require("../services/auth.service");
 
-// register controller
+
+
+//register controller
 const register = async (req, res) => {
   try {
     const user = await authService.register(req.body);
@@ -19,7 +21,8 @@ const register = async (req, res) => {
   }
 };
 
-// login controller
+
+//login controller
 const login = async (req, res) => {
   try {
     const { user, token } = await authService.login(req.body);
@@ -39,11 +42,11 @@ const login = async (req, res) => {
   }
 };
 
-// get current logged-in user
+//get current logged-in user controller
 const getMe = async (req, res) => {
   try {
-    // req.user is set by auth middleware
-    return res.json({
+    // req.user is populated by auth middleware
+    return res.status(200).json({
       _id: req.user._id,
       name: req.user.name,
       email: req.user.email,
